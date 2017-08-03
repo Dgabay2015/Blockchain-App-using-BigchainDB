@@ -80,7 +80,7 @@ def SayHello(name):
     #
     # }
     message = str(asset.get_asset_details())
-    # return jsonify(results=message)
+    return jsonify(results=message)
     return message
 port = os.getenv('PORT', '5001')
 if __name__ == "__main__":
