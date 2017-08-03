@@ -1,1 +1,2 @@
 Flask==0.10.1
+bigchaindb_driver==0.4.0
