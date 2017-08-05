@@ -14,6 +14,8 @@
 
 import os
 from flask import Flask, jsonify
+from flask import request
+from flask import render_template
 from keygen import alice, bob
 from asset import Asset
 
@@ -54,6 +56,41 @@ def GetPeople():
     ]
     return jsonify(results=list)
 
+# @app.route('/', methods=['POST'])
+# def my_form_post():
+#
+#     text = request.form['text']
+#
+#     tx = asset.view_asset_by_tx(text)
+#     return jsonify(results=tx)
+
+
+@app.route('/viewby')
+def my_form():
+    return render_template("my-form.html")
+
+
+@app.route('/', methods=['POST'])
+def my_form_post():
+
+    text = request.form['text']
+
+    tx = asset.view_asset_by_tx(text)
+    return jsonify(results=tx)
+
+
+@app.route('/newasset')
+def create_form():
+    return app.send_static_file("newasset.html")
+
+
+@app.route('/', methods=['POST'])
+def create_form_post():
+
+    text = request.form['text']
+
+    tx = asset.view_asset_by_tx(text)
+    return jsonify(results=tx)
 
 @app.route('/createassett/<name>')
 def CreateAsset():

@@ -81,7 +81,12 @@ class Asset:
         print("Was Alice the previous owner?",
               fulfilled_transfer_tx['inputs'][0]['owners_before'][0] == alice.public_key)
 
-    def view_asset(self):
+    def view_asset(self, txid=""):
         creation_tx = bdb.transactions.retrieve(self.txid)
+        return creation_tx
+
+
+    def view_asset_by_tx(self, txid):
+        creation_tx = bdb.transactions.retrieve(txid)
         return creation_tx
 
