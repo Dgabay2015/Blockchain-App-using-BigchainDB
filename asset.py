@@ -12,12 +12,12 @@ bdb = BigchainDB('https://test.ipdb.io/', headers=tokens)
 
 
 class Asset:
-    def __init__(self, description):
+    def __init__(self, description, serial="default", manufacturer="default"):
         name = {
             'data': {
                 description: {
-                    'serial_number': 'abcd1234',
-                    'manufacturer': 'bkfab',
+                    'serial_number': serial,
+                    'manufacturer': manufacturer,
                 },
             },
         }

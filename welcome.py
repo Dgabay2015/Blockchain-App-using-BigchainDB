@@ -32,6 +32,12 @@ def Welcome():
 
     return app.send_static_file('index.html')
 
+
+@app.route('/viewby')
+def my_form():
+    return app.send_static_file("my-form.html")
+
+
 @app.route('/createuser')
 def createuser():
 
@@ -56,41 +62,31 @@ def GetPeople():
     ]
     return jsonify(results=list)
 
-# @app.route('/', methods=['POST'])
-# def my_form_post():
-#
-#     text = request.form['text']
-#
-#     tx = asset.view_asset_by_tx(text)
-#     return jsonify(results=tx)
-
-
-@app.route('/viewby')
-def my_form():
-    return render_template("my-form.html")
-
-
-@app.route('/', methods=['POST'])
-def my_form_post():
-
-    text = request.form['text']
-
-    tx = asset.view_asset_by_tx(text)
-    return jsonify(results=tx)
-
 
 @app.route('/newasset')
 def create_form():
     return app.send_static_file("newasset.html")
 
 
-@app.route('/', methods=['POST'])
-def create_form_post():
+@app.route('/', methods=['POST', 'GET'])
+def my_form_post():
+    if request.method == 'POST':
+        if request.form['serial'] != "":
+            name = request.form['name']
+            serial = request.form['serial']
+            manufacturer = request.form['manufacturer']
+            print("hello")
+            newasset = Asset(name, serial, manufacturer)
+            message = str(newasset.get_asset_details())
 
-    text = request.form['text']
+            return jsonify(results=message)
+        else:
+            text = request.form['text']
 
-    tx = asset.view_asset_by_tx(text)
-    return jsonify(results=tx)
+            tx = asset.view_asset_by_tx(text)
+            return jsonify(results=tx)
+
+
 
 @app.route('/createassett/<name>')
 def CreateAsset():
@@ -119,6 +115,6 @@ def SayHello(name):
     message = str(asset.get_asset_details())
     return jsonify(results=message)
     return message
-port = os.getenv('PORT', '5001')
+port = os.getenv('PORT', '5002')
 if __name__ == "__main__":
 	app.run(host='0.0.0.0', port=int(port))
